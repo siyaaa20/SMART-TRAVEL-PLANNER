@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Travel Planner</title>
+    <style>
+        body {
+            background-color: #007bff;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        form { max-width: 480px; margin-top: 1rem; }
+        input[type="text"], input[type="number"] { 
+            padding: 0.5rem; 
+            margin-top: 0.25rem; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        input[type="radio"] { 
+            margin-right: 0.5rem; 
+            cursor: pointer;
+        }
+        label { 
+            cursor: pointer; 
+            display: inline;
+            margin-right: 1.5rem;
+        }
+        button { 
+            padding: 0.5rem; 
+            margin-top: 1rem; 
+            width: 100%; 
+            background: #0056b3; 
+            color: #fff; 
+            border: none; 
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #004085; }
+    </style>
+</head>
+<body>
+    <h1>Smart Travel Planner ✈️</h1>
+
+    <form action="/generate" method="post">
+        Destination: <input type="text" name="destination" required><br><br>
+        Days: <input type="number" name="days" required><br><br>
+        Budget: <input type="number" name="budget" required><br><br>
+        
+        Trip Type:<br>
+        <input type="radio" name="trip_type" value="solo" id="solo"> <label for="solo">Solo Trip</label><br>
+        <input type="radio" name="trip_type" value="family" id="family"> <label for="family">Family Trip</label><br>
+        <input type="radio" name="trip_type" value="couple" id="couple"> <label for="couple">Couple Trip</label><br>
+        <input type="radio" name="trip_type" value="group" id="group"> <label for="group">Group Trip</label><br><br>
+        
+        <button type="submit">Generate Plan</button>
+    </form>
+</body>
+</html>
