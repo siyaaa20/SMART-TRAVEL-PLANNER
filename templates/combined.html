@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Travel — Combined</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --cream:#FFFDF9; --blush-1:#FFEFF4; --blush-2:#FFDCE6; --accent:#D4749F; --muted:#7A6B8F;
+      --card-shadow: 0 12px 40px rgba(212,148,175,0.12);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;width:100%}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+      background:var(--cream); color:var(--muted); -webkit-font-smoothing:antialiased; display:flex; align-items:center; justify-content:center;
+      min-height:100vh; overflow:hidden;
+    }
+
+    /* container that holds both sections stacked */
+    .viewport{ position:relative; width:100%; max-width:720px; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+
+    /* shared animation helpers */
+    .panel{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition: opacity 600ms cubic-bezier(.2,.9,.2,1), transform 520ms cubic-bezier(.2,.9,.2,1); }
+    .hidden{ opacity:0; pointer-events:none; transform:translateY(10px); }
+    .visible{ opacity:1; pointer-events:auto; transform:translateY(0); }
+
+    /* SPLASH */
+    #splash{ background:transparent }
+    .splash-inner{ text-align:center; cursor:pointer; user-select:none; }
+    .logo-wrap{ position:relative; display:inline-flex; align-items:center; justify-content:center; }
+    svg.brush{ display:block }
+    h1.logo{
+      font-family:'Dancing Script', cursive; font-size:5.2rem; color:#111; margin:0; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:2; pointer-events:none;
+      transition: transform 220ms ease;
+    }
+    .logo-wrap:hover h1.logo{ transform:translate(-50%,-50%) scale(1.04) }
+    @media (max-width:480px){ h1.logo{ font-size:3rem } svg.brush{ width:360px;height:auto } }
+
+    /* HOME */
+    .card{
+      width:100%; max-width:520px; background:rgba(255,255,255,0.98); border-radius:18px; padding:2.25rem; box-shadow:var(--card-shadow);
+      text-align:center; transition: transform 240ms ease, box-shadow 240ms ease;
+    }
+    .card:hover{ transform:translateY(-6px) }
+    h2{ font-family:'Playfair Display', serif; color:var(--accent); font-size:1.9rem; margin-bottom:0.25rem }
+    p.lead{ color:#B89CC9; margin-bottom:1.25rem; font-weight:300 }
+
+    form{ display:flex; flex-direction:column; gap:0.9rem; align-items:stretch }
+    label{ font-size:0.85rem; color:#9B7BA1; margin-bottom:0.35rem; text-align:left }
+    input[type=text], input[type=number]{ width:100%; padding:0.9rem 1rem; border-radius:12px; border:1px solid rgba(217,191,205,0.6); background:white; font-size:0.95rem; color:var(--muted); box-shadow:0 8px 26px rgba(217,191,205,0.10); transition: box-shadow 180ms ease, transform 140ms ease, border-color 140ms ease }
+    input:focus{ outline:none; border-color:var(--blush-2); box-shadow:0 12px 36px rgba(212,148,175,0.12); transform:translateY(-1px) }
+
+    .btn-lets{
+      margin-top:0.6rem; display:inline-flex; gap:0.6rem; align-items:center; justify-content:center; padding:0.9rem 1.2rem; border-radius:12px; border:none; cursor:pointer; font-family:'Playfair Display', serif; font-size:1.05rem; color:white; background:linear-gradient(135deg,var(--blush-2) 0%, var(--accent) 100%); box-shadow: 0 12px 36px rgba(212,148,175,0.14); transition: transform 220ms ease, box-shadow 220ms ease }
+    .btn-lets:hover{ transform:translateY(-6px); box-shadow:0 28px 64px rgba(212,148,175,0.18) }
+
+    /* spacing for inputs container */
+    .inputs{ display:flex; flex-direction:column; gap:0.75rem }
+
+    /* small screens */
+    @media (max-width:480px){ .card{ padding:1.5rem; border-radius:14px } }
+  </style>
+</head>
+<body>
+  <div class="viewport" aria-live="polite">
+
+    <!-- Splash panel -->
+    <section id="splash" class="panel visible" aria-label="Splash screen">
+      <div class="splash-inner logo-wrap" id="splashArea" tabindex="0">
+        <!-- brush stroke SVG -->
+        <svg class="brush" width="520" height="160" viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g transform="translate(0,10)">
+            <path d="M30 80c90-40 140-30 220-18s160 6 250-6c30-4 40-2 60 2" fill="none" stroke="#FFEFF4" stroke-width="56" stroke-linecap="round"/>
+            <path d="M30 80c90-40 140-30 220-18s160 6 250-6c30-4 40-2 60 2" fill="none" stroke="#FFB6D9" stroke-width="46" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <h1 class="logo">Travel</h1>
+      </div>
+    </section>
+
+    <!-- Home panel (initially hidden) -->
+    <section id="home" class="panel hidden" aria-hidden="true">
+      <div class="card" role="main" aria-labelledby="homeTitle">
+        <h2 id="homeTitle">Smart Travel Planner</h2>
+        <p class="lead">Dreamy minimal trip planning</p>
+
+        <form id="homeForm" onsubmit="event.preventDefault();">
+          <div class="inputs">
+            <div>
+              <label for="dest">Destination</label>
+              <input id="dest" name="destination" type="text" placeholder="e.g., Paris, Bali" required />
+            </div>
+
+            <div>
+              <label for="budget">Budget (USD)</label>
+              <input id="budget" name="budget" type="number" min="0" placeholder="e.g., 2000" required />
+            </div>
+
+            <div>
+              <label for="days">No. of Days</label>
+              <input id="days" name="days" type="number" min="1" max="365" placeholder="e.g., 5" required />
+            </div>
+          </div>
+
+          <button class="btn-lets" type="submit" aria-label="Let's Go">
+            <!-- simple plane icon -->
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12L22 3L16 13L22 21L2 12Z" fill="white"/></svg>
+            Let's Go
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    (function(){
+      const splash = document.getElementById('splash');
+      const home = document.getElementById('home');
+      const splashArea = document.getElementById('splashArea');
+
+      // Ensure splash initially fades in (use rAF for smooth start)
+      requestAnimationFrame(()=>{ splash.classList.remove('hidden'); splash.classList.add('visible'); });
+
+      function revealHome(){
+        // guard
+        if(splash.classList.contains('hidden')) return;
+        // fade splash out
+        splash.classList.remove('visible'); splash.classList.add('hidden');
+        splash.setAttribute('aria-hidden','true');
+
+        // after transition, show home
+        setTimeout(()=>{
+          home.classList.remove('hidden'); home.classList.add('visible'); home.removeAttribute('aria-hidden');
+          // focus first input for accessibility
+          const first = document.getElementById('dest'); if(first) first.focus();
+        }, 520);
+      }
+
+      // click or key on splash area triggers reveal
+      splashArea.addEventListener('click', revealHome, {once:true});
+      splashArea.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') revealHome(); });
+
+      // also allow clicking anywhere on splash section
+      splash.addEventListener('click', function(e){ if(e.target === splash) revealHome(); }, {once:true});
+    })();
+  </script>
+</body>
+</html>

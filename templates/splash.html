@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Travel — Splash</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root{ --cream: #FFFDF9; --blush: #FFDCE6; --stroke:#FFB6D9; --text:#1f1f1f }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0; background:var(--cream); font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+            display:flex; align-items:center; justify-content:center; overflow:hidden;
+            -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+        }
+
+        .stage{ text-align:center; opacity:0; transform:scale(1); transition:opacity 700ms ease, transform 300ms ease; will-change:opacity,transform }
+        .stage.enter{ opacity:1 }
+        .stage.exit{ opacity:0; transform:scale(0.98) }
+
+        .logo-wrap{ display:inline-flex; align-items:center; justify-content:center; gap:0; cursor:pointer; }
+
+        /* brush stroke SVG sits behind the word */
+        .brush{ display:block }
+
+        .mark{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); pointer-events:none }
+
+        .word{
+            font-family:'Dancing Script', cursive; font-size:4.2rem; color:var(--text);
+            line-height:1; position:relative; z-index:2; margin:0; padding:0 0.35rem; letter-spacing:0.5px;
+            transition:transform 220ms ease; display:inline-block;
+        }
+
+        .logo-wrap:hover .word{ transform:scale(1.04) }
+
+        /* small responsive tweaks */
+        @media (max-width:480px){ .word{ font-size:2.6rem } }
+
+        /* subtle shadow for brush */
+        .brush-shadow{ filter:blur(2px) opacity(0.98) }
+    </style>
+</head>
+<body>
+    <div class="stage" id="stage">
+        <div class="logo-wrap" id="logo" role="button" aria-label="Enter site">
+            <!-- SVG brush stroke (soft blush) -->
+            <svg class="brush" width="520" height="160" viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                    <linearGradient id="g1" x1="0" x2="1">
+                        <stop offset="0" stop-color="#FFEFF4" />
+                        <stop offset="1" stop-color="#FFDCE6" />
+                    </linearGradient>
+                </defs>
+                <g transform="translate(0,10)">
+                    <path class="brush-shadow" d="M30 80c90-40 140-30 220-18s160 6 250-6c30-4 40-2 60 2" fill="none" stroke="#FFDCE6" stroke-width="56" stroke-linecap="round" opacity="0.95"/>
+                    <path d="M30 80c90-40 140-30 220-18s160 6 250-6c30-4 40-2 60 2" fill="none" stroke="#FFB6D9" stroke-width="46" stroke-linecap="round" opacity="0.98"/>
+                </g>
+            </svg>
+
+            <!-- Word overlay -->
+            <h1 class="word">Travel</h1>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            const stage = document.getElementById('stage');
+            const logo = document.getElementById('logo');
+
+            // fade in
+            requestAnimationFrame(()=> requestAnimationFrame(()=> stage.classList.add('enter')));
+
+            function goToIndex(){
+                // prevent double clicks
+                if(stage.classList.contains('exit')) return;
+                stage.classList.remove('enter');
+                stage.classList.add('exit');
+                // match transition duration (700ms) then redirect
+                setTimeout(()=> window.location.href = 'index.html', 680);
+            }
+
+            // click anywhere to continue
+            document.addEventListener('click', function(e){
+                goToIndex();
+            }, {once:true});
+
+            // allow keyboard activation (Enter/Space)
+            logo.addEventListener('keydown', function(e){
+                if(e.key === 'Enter' || e.key === ' ') goToIndex();
+            });
+
+            // make logo focusable for accessibility
+            logo.tabIndex = 0;
+        })();
+    </script>
+</body>
+</html>

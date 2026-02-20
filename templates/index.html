@@ -1,58 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Travel Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #007bff;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            padding: 2rem;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root{
+            --cream: #FFF8F0;
+            --blush-1: #FFE6F0;
+            --blush-2: #FFB6D9;
+            --lav: #E6D5F0;
+            --accent: #D4749F;
+            --muted: #7A6B8F;
         }
-        form { max-width: 480px; margin-top: 1rem; }
-        input[type="text"], input[type="number"] { 
-            padding: 0.5rem; 
-            margin-top: 0.25rem; 
-            width: 100%; 
-            box-sizing: border-box; 
+
+        html,body{ height:100%; }
+
+        body{
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush-1) 50%, var(--lav) 100%);
+            color: var(--muted);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:2rem;
         }
-        input[type="radio"] { 
-            margin-right: 0.5rem; 
-            cursor: pointer;
+
+        .card{
+            width:100%;
+            max-width:520px;
+            background: rgba(255,255,255,0.95);
+            border-radius:18px;
+            padding:2.25rem;
+            box-shadow: 0 12px 40px rgba(212,148,175,0.12);
+            text-align:center;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        label { 
-            cursor: pointer; 
-            display: inline;
-            margin-right: 1.5rem;
+
+        .card:hover{ transform: translateY(-6px); box-shadow: 0 20px 50px rgba(212,148,175,0.14); }
+
+        h1{ font-family: 'Playfair Display', serif; color: var(--accent); font-size:2rem; margin-bottom:0.25rem; }
+        p.lead{ color: #B89CC9; font-size:0.95rem; margin-bottom:1.5rem; font-weight:300; }
+
+        form{ display:flex; flex-direction:column; gap:1rem; align-items:stretch; }
+
+        label{ display:block; font-size:0.85rem; color:#9B7BA1; margin-bottom:0.35rem; text-align:left; }
+
+        input[type="text"], input[type="number"]{
+            width:100%; padding:0.9rem 1rem; border-radius:12px; border:1px solid rgba(217,191,205,0.6);
+            background: white; font-size:0.95rem; color:var(--muted);
+            box-shadow: 0 6px 18px rgba(217,191,205,0.12);
+            transition: box-shadow 0.22s ease, transform 0.18s ease, border-color 0.18s ease;
         }
-        button { 
-            padding: 0.5rem; 
-            margin-top: 1rem; 
-            width: 100%; 
-            background: #0056b3; 
-            color: #fff; 
-            border: none; 
-            cursor: pointer;
-            font-weight: bold;
+
+        input:focus{ outline:none; border-color: var(--blush-2); box-shadow: 0 8px 30px rgba(212,148,175,0.12); transform: translateY(-1px); }
+
+        .inputs { display:flex; flex-direction:column; gap:0.85rem; }
+
+        .btn-go{
+            margin-top:0.6rem; display:inline-flex; gap:0.6rem; align-items:center; justify-content:center;
+            padding:0.9rem 1.2rem; border-radius:12px; border:none; cursor:pointer;
+            font-family: 'Playfair Display', serif; font-size:1.05rem; color:white;
+            background: linear-gradient(135deg,var(--blush-2) 0%, var(--accent) 100%);
+            box-shadow: 0 10px 30px rgba(212,148,175,0.18); transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-        button:hover { background: #004085; }
+
+        .btn-go svg{ width:18px; height:18px; transform:translateY(1px); }
+
+        .btn-go:hover{ transform: translateY(-6px); box-shadow: 0 26px 60px rgba(212,148,175,0.18), 0 0 18px rgba(255,182,201,0.12); }
+
+        /* Responsive */
+        @media (max-width:480px){
+            .card{ padding:1.5rem; border-radius:14px; }
+            h1{ font-size:1.5rem; }
+            .btn-go{ font-size:1rem; padding:0.8rem 1rem; }
+        }
     </style>
 </head>
 <body>
-    <h1>Smart Travel Planner ✈️</h1>
+    <main class="card" role="main" aria-labelledby="site-title">
+        <h1 id="site-title">Smart Travel Planner</h1>
+        <p class="lead">Dreamy, minimal trip planning</p>
 
-    <form action="/generate" method="post">
-        Destination: <input type="text" name="destination" required><br><br>
-        Days: <input type="number" name="days" required><br><br>
-        Budget: <input type="number" name="budget" required><br><br>
-        
-        Trip Type:<br>
-        <input type="radio" name="trip_type" value="solo" id="solo"> <label for="solo">Solo Trip</label><br>
-        <input type="radio" name="trip_type" value="family" id="family"> <label for="family">Family Trip</label><br>
-        <input type="radio" name="trip_type" value="couple" id="couple"> <label for="couple">Couple Trip</label><br>
-        <input type="radio" name="trip_type" value="group" id="group"> <label for="group">Group Trip</label><br><br>
-        
-        <button type="submit">Generate Plan</button>
-    </form>
+        <form onsubmit="event.preventDefault();" aria-label="Travel form">
+            <div class="inputs">
+                <div>
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" name="destination" placeholder="e.g., Paris, Tokyo, Bali" required>
+                </div>
+
+                <div>
+                    <label for="budget">Budget (USD)</label>
+                    <input type="number" id="budget" name="budget" min="0" placeholder="e.g., 2000" required>
+                </div>
+
+                <div>
+                    <label for="days">No. of Days</label>
+                    <input type="number" id="days" name="days" min="1" max="365" placeholder="e.g., 5" required>
+                </div>
+            </div>
+
+            <button class="btn-go" type="submit" aria-label="Let's Go">
+                <!-- small plane SVG icon -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M2 12L22 3L16 13L22 21L2 12Z" fill="white" opacity="0.95"/>
+                </svg>
+                Let's Go
+            </button>
+        </form>
+    </main>
 </body>
 </html>

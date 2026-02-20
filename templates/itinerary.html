@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Itinerary - Smart Travel Planner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE6F0 50%, #E6D5F0 100%);
+            font-family: 'Poppins', sans-serif;
+            color: #7A6B8F;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #D4749F;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .destination {
+            color: #B89CC9;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .itinerary-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 50px rgba(255, 179, 217, 0.2);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .itinerary-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(255, 179, 217, 0.3);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            color: #D4749F;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .itinerary-content {
+            flex: 1;
+            overflow-y: scroll;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom scrollbar styling */
+        .itinerary-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .itinerary-content::-webkit-scrollbar-track {
+            background: #FFE6F0;
+            border-radius: 10px;
+        }
+
+        .itinerary-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #FFB6D9, #D4749F);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .itinerary-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #D4749F, #B89CC9);
+        }
+
+        /* Firefox scrollbar */
+        .itinerary-content {
+            scrollbar-color: #FFB6D9 #FFE6F0;
+            scrollbar-width: thin;
+        }
+
+        .itinerary-text {
+            color: #7A6B8F;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        .day-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #FFE0EC;
+        }
+
+        .day-section:last-child {
+            border-bottom: none;
+        }
+
+        .day-title {
+            color: #D4749F;
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .day-description {
+            color: #8B7B99;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-button a {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #FFB6D9 0%, #D4749F 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-button a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 179, 217, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .itinerary-card {
+                height: 450px;
+                padding: 2rem;
+                border-radius: 15px;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+
+            .itinerary-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .destination {
+                font-size: 1rem;
+            }
+
+            .itinerary-card {
+                height: 400px;
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            .card-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .day-title {
+                font-size: 1rem;
+            }
+
+            .itinerary-text {
+                font-size: 0.85rem;
+                text-align: left;
+            }
+
+            header {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header>
+            <h1>✨ Your Itinerary</h1>
+            <p class="destination">Paris, France • 5 Days</p>
+        </header>
+
+        <div class="itinerary-card">
+            <h2 class="card-title">Romantic Paris Escape</h2>
+            <div class="itinerary-content">
+                <div class="itinerary-text">
+                    <div class="day-section">
+                        <div class="day-title">Day 1 - Arrival & Montmartre</div>
+                        <div class="day-description">
+                            Begin your Parisian adventure by landing at Charles de Gaulle Airport. After settling into your charming boutique hotel in the heart of Paris, take a leisurely stroll through the enchanting neighborhood of Montmartre. Climb the stairs leading to the iconic Sacré-Cœur Basilica and witness the golden hour casting a magical glow over the city. Explore the artistic streets filled with local artists and galleries, then enjoy a traditional French dinner at a cozy bistro with authentic Parisian charm. Experience the romance of Paris as you walk along the cobblestone streets lined with historic buildings and warm amber streetlights.
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="day-title">Day 2 - The Louvre & Riverside Romance</div>
+                        <div class="day-description">
+                            Start your day at the world-renowned Louvre Museum, allowing yourself adequate time to admire masterpieces including the Mona Lisa and Venus de Milo. The museum's glass pyramid and grand courtyards are architectural wonders in themselves. Afterward, take a refreshing break at a nearby café with authentic French pastries and coffee. In the afternoon, rent bicycles and ride along the Seine River, discovering hidden, picturesque bridges and charming riverside cafés. As evening approaches, embrace the gentle twilight while sitting by the riverbank, watching the city lights reflect on the water and listening to the soothing sounds of classical music echoing through the historic streets.
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="day-title">Day 3 - Eiffel Tower & Trocadéro Gardens</div>
+                        <div class="day-description">
+                            No visit to Paris is complete without experiencing the majestic Eiffel Tower. Take the elevator to the top and marvel at panoramic views stretching across the entire city, or climb the stairs for a more intimate experience. Afterwards, head to Trocadéro Gardens for the most iconic photograph of the tower surrounded by manicured lawns and cascading fountains. The golden hour transforms this location into a photographer's paradise. Enjoy a gourmet lunch at a restaurant with tower views, then spend the afternoon exploring the nearby Palais de Chaillot or the boutique shops in the Trocadéro area. As night falls, watch the tower sparkle with its enchanting light show every fifteen minutes, creating an unforgettable moment of pure magic.
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="day-title">Day 4 - Versailles Grandeur</div>
+                        <div class="day-description">
+                            Take a short train journey to the opulent Palace of Versailles, one of the world's most magnificent royal residences. Wander through the stunning Hall of Mirrors, adorned with intricate chandeliers and frescoed ceilings that showcase the unparalleled wealth and power of French monarchy. Explore the lavishly decorated apartments and intimate chambers where history was made. Spend leisurely time in the expansive gardens designed by Le Nôtre, featuring perfectly manicured hedges, serene fountains, and tranquil water features. Pack a picnic or visit the garden café while admiring the symmetrical landscape and the grand canal. The gardens are particularly enchanting during the spring and early summer when flowers bloom in vibrant colors.
+                        </div>
+                    </div>
+
+                    <div class="day-section">
+                        <div class="day-title">Day 5 - Le Marais & Departure</div>
+                        <div class="day-description">
+                            On your final day, explore the charming historic district of Le Marais, known for its narrow streets, medieval architecture, and vibrant cultural scene. Browse eclectic boutique shops, contemporary art galleries, and vintage stores housed in beautiful Renaissance buildings. Visit the magnificent Place des Vosges, a stunning square surrounded by elegant galleries, cafés, and shops with arcaded walkways. Enjoy lunch at a local restaurant serving innovative French cuisine while people-watching in the bustling square. Visit the Jewish Museum or explore the thriving LGBTQ+ community that has made this district famous. Conclude your Parisian journey with a sunset walk along the canal, savoring the last moments of your magical escapade before heading to the airport with unforgettable memories and a heart full of Parisian magic.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="back-button">
+            <a href="index.html">← Back Home</a>
+        </div>
+    </div>
+</body>
+</html>
