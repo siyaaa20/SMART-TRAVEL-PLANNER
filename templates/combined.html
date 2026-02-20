@@ -87,7 +87,7 @@
         <h2 id="homeTitle">Smart Travel Planner</h2>
         <p class="lead">Dreamy minimal trip planning</p>
 
-        <form id="homeForm" onsubmit="event.preventDefault();">
+        <form id="homeForm" action="/generate" method="POST">
           <div class="inputs">
             <div>
               <label for="dest">Destination</label>
@@ -104,6 +104,9 @@
               <input id="days" name="days" type="number" min="1" max="365" placeholder="e.g., 5" required />
             </div>
           </div>
+
+          <!-- Hidden trip_type field (defaults to solo) -->
+          <input type="hidden" name="trip_type" value="solo" />
 
           <button class="btn-lets" type="submit" aria-label="Let's Go">
             <!-- simple plane icon -->

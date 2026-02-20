@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "npx live-server templates --port=8000"
+    "dev": "python3 app.py"
   }
 }

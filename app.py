@@ -19,6 +19,10 @@ groq_client = Groq(api_key=GROQ_API_KEY)
 def home():
     return render_template("index.html")
 
+@app.route('/combined')
+def combined():
+    return render_template("combined.html")
+
 @app.route('/generate', methods=['POST'])
 def generate():
     destination = request.form['destination']
