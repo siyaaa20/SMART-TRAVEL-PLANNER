@@ -2,3 +2,4 @@ flask
 groq
 markdown
 python-dotenv
+markupsafe
